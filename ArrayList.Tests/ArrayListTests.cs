@@ -41,7 +41,7 @@ namespace ArrayListTests
             return array;
         }
 
-        public ArrayList GetTestListToTestAddFirst(int key)
+        public ArrayList GetListToAdd(int key)
         {
             int[] arrayA = new int[] { 2, 3, 4 };
             int[] arrayB = new int[] { -2, 32, 43 };
@@ -97,8 +97,8 @@ namespace ArrayListTests
         }
         public ArrayList GetExpectedListToTestAddLastList(int key)
         {
-            int[] arrayA = new int[] {  1, 2, 8, 4, 2, 3, 4, };
-            int[] arrayB = new int[] {  -3, 6, 32, 19, 22, 99, -2, 32, 43, };
+            int[] arrayA = new int[] { 1, 2, 8, 4, 2, 3, 4 };
+            int[] arrayB = new int[] { -3, 6, 32, 19, 22, 99, -2, 32, 43 };
 
             ArrayList arrayList = key switch
             {
@@ -110,6 +110,82 @@ namespace ArrayListTests
         }
 
 
+        public ArrayList GetExpectedForAddAtTest(int key)
+        {
+
+            int[] arrayA = new int[] { 1, 2, 54, 8, 4 };
+            int[] arrayB = new int[] { -3, 6, 32, 19, 89, 22, 99};
+
+            ArrayList arrayList = key switch
+            {
+                1 => new ArrayList(arrayA),
+                2 => new ArrayList(arrayB),
+                _ => new ArrayList(),
+            };
+            return arrayList;
+        }
+
+         public ArrayList GetExpectedForAddAtTestList(int key)
+        {
+
+            int[] arrayA = new int[] { 1, 2, 2, 3, 4, 8, 4 };
+            int[] arrayB = new int[] { -3, 6, 32, 19, -2, 32, 43, 22, 99};
+
+            ArrayList arrayList = key switch
+            {
+                1 => new ArrayList(arrayA),
+                2 => new ArrayList(arrayB),
+                _ => new ArrayList(),
+            };
+            return arrayList;
+        }
+
+
+        public ArrayList GetExpectedForSetTest(int key)
+        {
+            int[] arrayA = new int[] { 1, 2, 10, 4 };
+            int[] arrayB = new int[] { -3, 6, 32, 19, 90, 99 };
+
+            ArrayList arrayList = key switch
+            {
+                1 => new ArrayList(arrayA),
+                2 => new ArrayList(arrayB),
+                _ => new ArrayList(),
+            };
+            return arrayList;
+        }
+
+        public ArrayList GetExpectedRemoveFirst(int key)
+        {
+
+            int[] arrayA = new int[] { 2, 8, 4 };
+            int[] arrayB = new int[] { 6, 32, 19, 22, 99 };
+
+            ArrayList arrayList = key switch
+            {
+                1 => new ArrayList(arrayA),
+                2 => new ArrayList(arrayB),
+                _ => new ArrayList(),
+            };
+            return arrayList;
+
+        }
+
+        public ArrayList GetExpectedRemoveLast(int key)
+        {
+
+            int[] arrayA = new int[] { 1, 2, 8 };
+            int[] arrayB = new int[] { -3, 6, 32, 19, 22};
+
+            ArrayList arrayList = key switch
+            {
+                1 => new ArrayList(arrayA),
+                2 => new ArrayList(arrayB),
+                _ => new ArrayList(),
+            };
+            return arrayList;
+
+        }
 
         [TestCase(1, 4)]
         [TestCase(2, 6)]
@@ -211,9 +287,93 @@ namespace ArrayListTests
             Assert.AreEqual(expected.ToArray(), actual.ToArray());
         }
 
+        [TestCase(1, 1, 2, 54)]
+        [TestCase(2, 2, 4, 89)]
+
+        public void AddAtTest(int key, int expectedKey, int idx, int val)
+        {
+            //arrange
+            ArrayList actual = new ArrayList(GetTestArray(key));
+            ArrayList expected = GetExpectedForAddAtTest(expectedKey);
+           
+            //act
+            actual.AddAt(idx, val);
 
 
+            //assert
+            Assert.AreEqual(expected.ToArray(), actual.ToArray());
+        }
+        [TestCase(1, 1, 2, 1)]
+        [TestCase(2, 2, 4, 2)]
+        public void AddAtTestList(int key, int expectedKey, int idx, int keyToAddList)
+        {
+            //arrange
+            ArrayList actual = new ArrayList(GetTestArray(key));
+            ArrayList expected = GetExpectedForAddAtTestList(expectedKey);
+            ArrayList addList = GetListToAdd(keyToAddList);
+            //act
+            actual.AddAt(idx, addList);
 
+
+            //assert
+            Assert.AreEqual(expected.ToArray(), actual.ToArray());
+        }
+
+        [TestCase(1, 1, 2, 10)]
+        [TestCase(2, 2, 4, 90)]
+
+        public void SetTest(int key, int expectedKey, int idx, int val)
+        {
+            //arrange
+            ArrayList actual = new ArrayList(GetTestArray(key));
+            ArrayList expected = GetExpectedForSetTest(expectedKey);
+            //act
+            actual.Set(idx, val);
+
+
+            //assert
+            Assert.AreEqual(expected.ToArray(), actual.ToArray());
+        }
+
+        [TestCase(1, 1)]
+        [TestCase(2, 2)]
+
+        public void RemoveFirstTest(int key, int expectedKey)
+        {
+            //arrange
+            ArrayList actual = new ArrayList(GetTestArray(key));
+            ArrayList expected = GetExpectedRemoveFirst(expectedKey);
+            //act
+            actual.RemoveFirst();
+
+            //assert
+            Assert.AreEqual(expected.ToArray(), actual.ToArray());
+        }
+
+        [TestCase(1, 1)]
+        [TestCase(2, 2)]
+        public void RemoveLastTest(int key, int expectedKey)
+        {
+            //arrange
+            ArrayList actual = new ArrayList(GetTestArray(key));
+            ArrayList expected = GetExpectedRemoveLast(expectedKey);
+            //act
+            actual.RemoveLast();
+
+            //assert
+            Assert.AreEqual(expected.ToArray(), actual.ToArray());
+        }
+        //public void RemoveLastTest(int key, int expectedKey)
+        //{
+        //    //arrange
+        //    ArrayList actual = new ArrayList(GetTestArray(key));
+        //    ArrayList expected = GetExpectedRemoveLast(expectedKey);
+        //    //act
+        //    actual.RemoveFirst();
+
+        //    //assert
+        //    Assert.AreEqual(expected.ToArray(), actual.ToArray());
+        //}
 
     }
 }
