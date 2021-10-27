@@ -192,6 +192,7 @@ namespace Lists
 
         public void RemoveFirst(int val)
         {
+           
             for (int i = 0; i < _listLength; i++)
             {
                 if (_arrayList[i] == val)
@@ -206,9 +207,11 @@ namespace Lists
         {
             for (int i = 0; i < _listLength; i++)
             {
+                
                 if (_arrayList[i] == val)
                 {
                     RemoveAt(i);
+                    i--;
                 }
             }
         }
@@ -240,7 +243,7 @@ namespace Lists
 
         public int GetFirst()
         {
-           return _arrayList[1];
+           return _arrayList[0];
         }
 
         public int GetLast()

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayList", "ArrayListRealization\ArrayList.csproj", "{A9FA9C6D-984E-463D-B738-A8CCCF3EAFC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArrayList", "ArrayListRealization\ArrayList.csproj", "{A9FA9C6D-984E-463D-B738-A8CCCF3EAFC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayList.Tests", "ArrayList.Tests\ArrayList.Tests.csproj", "{F74F89E5-4901-4C44-A6EE-EB80D318A764}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArrayList.Tests", "ArrayList.Tests\ArrayList.Tests.csproj", "{F74F89E5-4901-4C44-A6EE-EB80D318A764}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
