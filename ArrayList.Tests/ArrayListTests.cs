@@ -2,7 +2,7 @@ using NUnit.Framework;
 using Lists;
 namespace ArrayListTests
 {
-    public class Tests
+    public class ALTests
     {
         [SetUp]
         public void Setup()
@@ -721,9 +721,11 @@ namespace ArrayListTests
             //assert
             Assert.AreEqual(expected.ToArray(), actual.ToArray());
         }
+        [TestCase(1, 1)]
+        [TestCase(2, 2)]
 
 
-        public void SortDeskTest(int key, int expectedKey)
+        public void SortDescTest(int key, int expectedKey)
         {
             //arrange
             ArrayList actual = new ArrayList(GetTestArray(key));
