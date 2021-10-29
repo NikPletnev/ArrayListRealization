@@ -325,12 +325,163 @@ namespace Lists
 
         public int RemoveFirst(int val)
         {
-          
+            int idx = -1;
+            int count = 0;
+            Node current = _head;
+            if (_head.Next == null && _head.Value == val)
+            {
+                RemoveFirst();
+                idx = count;
+            }
+            else
+            {
+                while (current != null)
+                {
+                    if (current.Value == val)
+                    {
+                        idx = count;
+                        break;
+                    }
+                    current = current.Next;
+                    count++;
+                }
+                if (idx != -1)
+                {
+                    RemoveAt(idx);
+                }
+            }
+            return idx;
         }
 
-        public void RemoveAllTest(int val)
+        public int RemoveAll(int val)
         {
 
+            int idx = 0;
+            int count = 0;
+            int returnNumberDeleted = 0;
+            Node current = _head;
+            if (_head.Next == null && _head.Value == val)
+            {
+                RemoveFirst();
+                returnNumberDeleted++;
+            }
+            else
+            {
+                while (current != null)
+                {
+                    if (current.Value == val)
+                    {
+                        idx = count;
+                        RemoveAt(idx);
+                        current = _head;
+                        count = 0;
+                        returnNumberDeleted++;
+                        continue;
+                    }
+                    current = current.Next;
+                    count++;
+                }
+
+            }
+
+            return returnNumberDeleted;
+        }
+
+
+
+        public bool Contains(int val)
+        {
+            Node current = _head;
+            bool contains = false;
+            for (int i = 0; i < GetLength(); i++)
+            {
+                if (current.Value == val)
+                {
+                    contains = true;
+                    break;
+                }
+                current = current.Next;
+            }
+            return contains;
+        }
+
+        public int IndexOf(int val)
+        {
+            Node current = _head;
+            int idx = -1;
+            for (int i = 0; i < GetLength(); i++)
+            {
+                if (current.Value == val)
+                {
+                    idx = i;
+                    break;
+                }
+                current = current.Next;
+            }
+            return idx;
+        }
+
+        public int GetFirst()
+        {
+            if (_head != null)
+            {
+                return _head.Value;
+            }
+            else
+            {
+                throw new Exception("List has no elements");
+            }
+        }
+
+        public int GetLast()
+        {
+            if (_head != null)
+            {
+                Node current = _head;
+                while (current.Next !=null)
+                {
+                    current = current.Next;
+                }
+                return current.Value;
+            }
+            else
+            {
+                throw new Exception("List has no elements");
+            }
+        }
+
+        public int Get(int idx)
+        {
+            if (_head != null)
+            {
+                Node current = _head;
+                int len = GetLength();
+                for (int i = 0; i < idx; i++)
+                {
+                    current = current.Next;
+                }
+                return current.Value;
+            }
+            else
+            {
+                throw new Exception("List has no elements");
+            }
+        }
+
+        public void Reverse()
+        {
+            Node current = _head;
+            LinkedList reversedList = new LinkedList();
+            while (GetLength() != 0)
+            {
+                while (current.Next != null)
+                {
+                    current = current.Next;
+                }
+                reversedList.AddFirst(current.Value);
+                RemoveLast();
+            }
+            _head = reversedList.GetHead();
         }
 
 

@@ -13,12 +13,13 @@ namespace LinkedListTests
         public LinkedList GetTestLinkedList(int key)
         {
             int[] array = new int[] { 3, 5, 12, 15, 32 };
-
+            int[] array2 = new int[] { 9, 5, 3, 5, 5, 2 };
             LinkedList returnLinkedList = key switch
             {
                 1 => new LinkedList(),
                 2 => new LinkedList(5),
                 3 => new LinkedList(array),
+                4 => new LinkedList(array2),
                 _ => new LinkedList()
             };
             return returnLinkedList;
@@ -251,6 +252,101 @@ namespace LinkedListTests
             int actual = actualList.RemoveFirst(val);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(2, 5, 1)]
+        [TestCase(2, 2, 0)]
+        [TestCase(3, 15, 1)]
+        [TestCase(4, 5, 3)]
+
+        public void RemoveAllTest(int key, int val, int expected)
+        {
+            LinkedList actualList = GetTestLinkedList(key);
+
+            int actual = actualList.RemoveAll(val);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(2, 5, true)]
+        [TestCase(2, 2, false)]
+        [TestCase(3, 15, true)]
+        [TestCase(3, 1, false)]
+
+        public void ContainsTest(int key, int val, bool expected)
+        {
+            LinkedList actualList = GetTestLinkedList(key);
+
+            bool actual = actualList.Contains(val);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(2, 5, 0)]
+        [TestCase(2, 2, -1)]
+        [TestCase(3, 15, 3)]
+        [TestCase(3, 1, -1)]
+
+        public void IndexOfTest(int key, int val, int expected)
+        {
+            LinkedList actualList = GetTestLinkedList(key);
+
+            int actual = actualList.IndexOf(val);
+
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase(2, 5)]
+        [TestCase(3, 3)]
+        [TestCase(4, 9)]
+
+        public void GetFirstTest(int key, int expected)
+        {
+            LinkedList actualList = GetTestLinkedList(key);
+
+            int actual = actualList.GetFirst();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(2, 5)]
+        [TestCase(3, 32)]
+        [TestCase(4, 2)]
+
+        public void GetLastTest(int key, int expected)
+        {
+            LinkedList actualList = GetTestLinkedList(key);
+
+            int actual = actualList.GetLast();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(2, 0, 5)]
+        [TestCase(3, 3, 15)]
+        [TestCase(4, 2, 3)]
+
+        public void GetTest(int key,int idx, int expected)
+        {
+            LinkedList actualList = GetTestLinkedList(key);
+
+            int actual = actualList.Get(idx);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(2, new int[] { 5 })]
+        [TestCase(3, new int[] { 32, 32, 12, 5, 3 })]
+
+        public void ReversTest(int key, int[] expected)
+        {
+            LinkedList actual = GetTestLinkedList(key);
+
+            actual.Reverse();
+
+            Assert.AreEqual(expected, actual.ToArray());
         }
 
     }
