@@ -478,10 +478,162 @@ namespace Lists
                 {
                     current = current.Next;
                 }
-                reversedList.AddFirst(current.Value);
+               
+                reversedList.AddLast(current.Value);
+                current = _head;
                 RemoveLast();
             }
             _head = reversedList.GetHead();
+        }
+
+
+        public int Max()
+        {
+            if (_head != null)
+            {
+                Node current = _head;
+                int max = _head.Value;
+                while (current != null)
+                {
+                    if (current.Value > max)
+                    {
+                        max = current.Value;
+                    }
+                    current = current.Next;
+                }
+                return max;
+            }
+            else
+            {
+                throw new Exception("List has no elements");
+            }
+        }
+
+        public int Min()
+        {
+            if (_head != null)
+            {
+                Node current = _head;
+                int min = _head.Value;
+                while (current != null)
+                {
+                    if (current.Value < min)
+                    {
+                        min = current.Value;
+                    }
+                    current = current.Next;
+                }
+                return min;
+            }
+            else
+            {
+                throw new Exception("List has no elements");
+            }
+            
+        }
+
+
+        public int IndexOfMax()
+        {
+            if (_head != null)
+            {
+                Node current = _head;
+                int max = _head.Value;
+                int idx = 0;
+                int count = 0;
+                while (current != null)
+                {
+                    
+                    if (current.Value > max)
+                    {
+                        max = current.Value;
+                        idx = count;
+                    }
+                    current = current.Next;
+                    count++;
+                }
+                return idx;
+            }
+            else
+            {
+                throw new Exception("List has no elements");
+            }
+        }
+
+        public int IndexOfMin()
+        {
+            if (_head != null)
+            {
+                Node current = _head;
+                int min = _head.Value;
+                int idx = 0;
+                int count = 0;
+                while (current != null)
+                {
+                    if (current.Value < min)
+                    {
+                        min = current.Value;
+                        idx = count;
+                    }
+                    current = current.Next;
+                    count++;
+                }
+                return idx;
+            }
+            else
+            {
+                throw new Exception("List has no elements");
+            }
+
+        }
+
+
+        public void Sort()
+        {
+            Node outCurrent = _head;
+            Node innerCurrent = _head;
+            int tmp;
+
+            while (outCurrent.Next != null)
+            {
+                innerCurrent = outCurrent.Next;
+                while (innerCurrent != null)
+                {
+                    if (outCurrent.Value > innerCurrent.Value)
+                    {
+                        tmp = innerCurrent.Value;
+                        innerCurrent.Value = outCurrent.Value;
+                        outCurrent.Value = tmp;
+                    }
+                    innerCurrent = innerCurrent.Next;
+                }
+                outCurrent = outCurrent.Next;
+            }        
+
+        }
+
+        public void SortDesc()
+        {
+            Node outCurrent = _head;
+            Node innerCurrent = _head;
+            int tmp;
+
+            while (outCurrent.Next != null)
+            {
+                innerCurrent = outCurrent.Next;
+                while (innerCurrent != null)
+                {
+                    if (outCurrent.Value < innerCurrent.Value)
+                    {
+                        tmp = innerCurrent.Value;
+                        innerCurrent.Value = outCurrent.Value;
+                        outCurrent.Value = tmp;
+                    }
+                    innerCurrent = innerCurrent.Next;
+                }
+                outCurrent = outCurrent.Next;
+            }
+
         }
 
 

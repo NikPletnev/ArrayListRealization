@@ -338,7 +338,7 @@ namespace LinkedListTests
 
 
         [TestCase(2, new int[] { 5 })]
-        [TestCase(3, new int[] { 32, 32, 12, 5, 3 })]
+        [TestCase(3, new int[] { 32, 15, 12, 5, 3 })]
 
         public void ReversTest(int key, int[] expected)
         {
@@ -348,6 +348,85 @@ namespace LinkedListTests
 
             Assert.AreEqual(expected, actual.ToArray());
         }
+
+
+        [TestCase(2, 5)]
+        [TestCase(3, 32)]
+
+        public void MaxTest(int key, int expected)
+        {
+            LinkedList actualList = GetTestLinkedList(key);
+
+            int actual = actualList.Max();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(2, 5)]
+        [TestCase(3, 3)]
+
+        public void MinTest(int key, int expected)
+        {
+            LinkedList actualList = GetTestLinkedList(key);
+
+            int actual = actualList.Min();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(2, 0)]
+        [TestCase(3, 4)]
+
+        public void IndexOfMaxTest(int key, int expected)
+        {
+            LinkedList actualList = GetTestLinkedList(key);
+
+            int actual = actualList.IndexOfMax();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(2, 0)]
+        [TestCase(3, 0)]
+
+        public void IndexOfMinTest(int key, int expected)
+        {
+            LinkedList actualList = GetTestLinkedList(key);
+
+            int actual = actualList.IndexOfMin();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(2, new int[] { 5 })]
+        [TestCase(4, new int[] { 2, 3, 5, 5, 5, 9 })]
+        public void SortTest(int key, int[] expected)
+        {
+            LinkedList actual = GetTestLinkedList(key);
+
+            actual.Sort();
+            
+
+            Assert.AreEqual(expected, actual.ToArray());
+
+        }
+
+        [TestCase(2, new int[] { 5 })]
+        [TestCase(4, new int[] { 9, 5, 5, 5, 3, 2 })]
+        public void SortDescTest(int key, int[] expected)
+        {
+            LinkedList actual = GetTestLinkedList(key);
+
+            actual.SortDesc();
+
+
+            Assert.AreEqual(expected, actual.ToArray());
+
+        }
+
+
 
     }
 }
