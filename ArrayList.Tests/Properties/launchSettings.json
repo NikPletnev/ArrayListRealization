@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ArrayList.Tests": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

@@ -425,8 +425,7 @@ namespace LinkedListTests
             Assert.AreEqual(expected, actual.ToArray());
 
         }
-
-
+        
 
     }
 }

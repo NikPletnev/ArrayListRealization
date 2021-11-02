@@ -491,6 +491,21 @@ namespace ArrayListTests
             Assert.AreEqual(expected.ToArray(), actual.ToArray());
         }
 
+        [TestCase(1, new int[] { 1, 2, 4 }, 2)]
+        [TestCase(2, new int[] {  6, 32, 19, 22, 99 }, 0)]
+        [TestCase(2, new int[] {  -3, 6, 32, 19, 22}, 5)]
+
+
+        public void RemoveAtTest(int key, int[] expecetd, int idx)
+        {
+            ArrayList actual = new ArrayList(GetTestArray(key));
+
+            actual.RemoveAt(idx);
+
+            Assert.AreEqual(expecetd, actual.ToArray());
+
+        }
+
         [TestCase(1, 1, 2)]
         [TestCase(2, 2, 3)]
 
@@ -538,7 +553,7 @@ namespace ArrayListTests
         [TestCase(1, 1, 8)]
         [TestCase(2, 2, 19)]
 
-        public void RemoveFirstTest(int key, int expectedKey, int val)
+        public void RemoveFirstValTest(int key, int expectedKey, int val)
         {
             //arrange
             ArrayList actual = new ArrayList(GetTestArray(key));

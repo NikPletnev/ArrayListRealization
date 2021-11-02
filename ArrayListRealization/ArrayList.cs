@@ -5,36 +5,29 @@ namespace Lists
     public class ArrayList
     {
         private int[] _arrayList;
-        private int _listLength; //real list lenght other are independent nulls
-
-        public int[] List
-        {
-            get
-            {
-                return _arrayList;
-            }
-            private set
-            {
-                _arrayList = value;
-            }
-        }
+        private int _listLength; //real list lenght other are independent null
 
         public ArrayList()
         {
             _listLength = 0;
-            _arrayList = new int[0];
+            _arrayList = new int[10];
         }
 
         public ArrayList(int element)
         {
             _listLength = 1;
-            _arrayList = new int[] { element };
+            _arrayList = new int[10];
+            _arrayList[0] = element;
         }
 
         public ArrayList(int[] array)
         {
             _listLength = array.Length;
-            _arrayList = new int[array.Length];
+            _arrayList = new int[10];
+            if (array.Length > 10)
+            {
+                ResizeArray(array.Length);
+            }
             for (int i = 0; i < array.Length; i++)
             {
                 _arrayList[i] = array[i];
@@ -58,25 +51,19 @@ namespace Lists
 
         public void AddFirst(int val)
         {
-            ResizeArray(_arrayList.Length + 1);
+
             _listLength += 1;
-            for (int i = _arrayList.Length - 1; i > 0; i--)
-            {
-                _arrayList[i] = _arrayList[i - 1];
-            }
+            ResizeArray(_listLength);
+            ShiftRight(1, 0);
             _arrayList[0] = val;
         }
 
         public void AddFirst(ArrayList list)
         {
+            ResizeArray(_listLength + list.GetLenght());
+            ShiftRight(list.GetLenght(), 0);
             _listLength += list.GetLenght();
             int[] addedList = list.ToArray();
-            ResizeArray(addedList.Length + _arrayList.Length);
-            for (int i = _arrayList.Length - addedList.Length - 1; i > -1; i--)
-            {
-                _arrayList[i + addedList.Length] = _arrayList[i];
-            }
-
             for (int i = 0; i < addedList.Length; i++)
             {
                 _arrayList[i] = addedList[i];
@@ -95,10 +82,10 @@ namespace Lists
 
         public void AddLast(ArrayList list)
         {
+            int oldLenght = _listLength;
             _listLength += list.GetLenght();
-            int oldLenght = _arrayList.Length;
             int[] addedList = list.ToArray();
-            ResizeArray(addedList.Length + _arrayList.Length);
+            ResizeArray(_listLength);
             int countAddedListIndex = 0;
             for (int i = oldLenght; i < oldLenght + addedList.Length; i++)
             {
@@ -110,8 +97,12 @@ namespace Lists
 
         public void AddAt(int idx, int val)
         {
+            if (idx < 0 || idx > _listLength-1)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             _listLength++;
-            ResizeArray(_arrayList.Length + 1);
+            ResizeArray(_listLength);
             for (int i = _arrayList.Length - 1; i > idx; i--)
             {
                 _arrayList[i] = _arrayList[i - 1];
@@ -121,13 +112,14 @@ namespace Lists
 
         public void AddAt(int idx, ArrayList list)
         {
+            if (idx < 0 || idx > _listLength - 1)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            ResizeArray(_listLength + list.GetLenght());
+            ShiftRight(list.GetLenght(), idx);
             _listLength += list.GetLenght();
             int[] addedList = list.ToArray();
-            ResizeArray(_arrayList.Length + addedList.Length);
-            for (int i = _arrayList.Length - 1; i > idx + addedList.Length - 1; i--)
-            {
-                _arrayList[i] = _arrayList[i - addedList.Length];
-            }
             for (int i = idx; i < idx + addedList.Length; i++)
             {
                 _arrayList[i] = addedList[i - idx];
@@ -136,32 +128,38 @@ namespace Lists
 
         public void Set(int idx, int val)
         {
+            if (idx < 0 || idx > _listLength - 1)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             _arrayList[idx] = val;
         }
 
         public void RemoveFirst()
         {
+            ShiftLeft(1, 1);
             _listLength--;
-            for (int i = 1; i < _arrayList.Length; i++)
-            {
-                _arrayList[i - 1] = _arrayList[i];
-            }
-            
+
         }
 
         public void RemoveLast()
         {
             _listLength--;
-           
+
         }
 
         public void RemoveAt(int idx)
         {
-            _listLength--;
-            for (int i = idx; i < _arrayList.Length - 1; i++)
+            if (idx < 0 || idx > _listLength - 1)
             {
-                _arrayList[i] = _arrayList[i+1];
+                throw new ArgumentOutOfRangeException();
             }
+            ShiftLeft(1, idx+1);
+            _listLength--;
+            //for (int i = idx; i < _arrayList.Length - 1; i++)
+            //{
+            //    _arrayList[i] = _arrayList[i + 1];
+            //}
         }
 
 
@@ -169,7 +167,7 @@ namespace Lists
         {
             for (int i = 0; i < _listLength - n; i++)
             {
-                _arrayList[i] = _arrayList[i+n];
+                _arrayList[i] = _arrayList[i + n];
             }
             _listLength -= n;
             SqueezeArray();
@@ -192,7 +190,7 @@ namespace Lists
 
         public void RemoveFirst(int val)
         {
-           
+
             for (int i = 0; i < _listLength; i++)
             {
                 if (_arrayList[i] == val)
@@ -207,7 +205,7 @@ namespace Lists
         {
             for (int i = 0; i < _listLength; i++)
             {
-                
+
                 if (_arrayList[i] == val)
                 {
                     RemoveAt(i);
@@ -243,7 +241,7 @@ namespace Lists
 
         public int GetFirst()
         {
-           return _arrayList[0];
+            return _arrayList[0];
         }
 
         public int GetLast()
@@ -256,11 +254,12 @@ namespace Lists
             if (idx < _listLength - 1)
             {
                 return _arrayList[idx];
-            }else
+            }
+            else
             {
                 throw new IndexOutOfRangeException();
             }
-            
+
         }
 
         public void Reverse()
@@ -340,7 +339,7 @@ namespace Lists
                 {
                     if (_arrayList[index] > _arrayList[indexSup])
                     {
-                        Swap(ref _arrayList[index], ref _arrayList[indexSup]);                       
+                        Swap(ref _arrayList[index], ref _arrayList[indexSup]);
                     }
                 }
             }
@@ -362,30 +361,47 @@ namespace Lists
 
         private void ResizeArray(int newLenght)
         {
-            if(newLenght > _arrayList.Length)
+            if (newLenght <= _arrayList.Length)
             {
-                int currentLength = _arrayList.Length;
-                while (currentLength < newLenght)
-                {
-                    if (currentLength < 2)
-                    {
-                        currentLength = 3;
-                    }
-                    else
-                    {
-                        currentLength = currentLength * 3 / 2;
-                    }
-
-                }
-                int[] newArrayList = new int[currentLength];
-
-                for (int i = 0; i < _arrayList.Length; i++)
-                {
-                    newArrayList[i] = _arrayList[i];
-                }
-                _arrayList = newArrayList;
+                return;
             }
+            int currentLength = _arrayList.Length;
+            while (currentLength < newLenght)
+            {
+                if (currentLength < 2)
+                {
+                    currentLength = 3;
+                }
+                else
+                {
+                    currentLength = currentLength * 3 / 2;
+                }
 
+            }
+            int[] newArrayList = new int[currentLength];
+
+            for (int i = 0; i < _arrayList.Length; i++)
+            {
+                newArrayList[i] = _arrayList[i];
+            }
+            _arrayList = newArrayList;
+
+        }
+
+        private void ShiftRight(int val, int idx)
+        {
+            for (int i = _listLength-1; i > idx-1; i--)
+            {
+                _arrayList[i + val] = _arrayList[i];
+            }
+        }
+
+        private void ShiftLeft(int val, int idx)
+        {
+            for (int i = idx; i < _listLength; i++)
+            {
+                _arrayList[i - val] = _arrayList[i];
+            }
         }
 
         private void SqueezeArray()
@@ -399,7 +415,7 @@ namespace Lists
             _arrayList = newArrayList;
         }
 
-         
+
         private void Swap(ref int numberA, ref int numberB)
         {
             int buffer = numberA;
