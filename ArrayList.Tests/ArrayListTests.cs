@@ -15,6 +15,7 @@ namespace ArrayListTests
             {
                 1 => new int[] { 1, 2, 8, 4 },
                 2 => new int[] { -3, 6, 32, 19, 22, 99 },
+                3 => new int[] { -3, 6, 32, 19, 22, 99 , 1, 1, 1, 1, 1, 1},
                 _ => new int[] { },
             };
             return array;
@@ -171,11 +172,14 @@ namespace ArrayListTests
 
             int[] arrayA = new int[] { 2, 8, 4 };
             int[] arrayB = new int[] { 6, 32, 19, 22, 99 };
+            int[] arrayC = new int[] {  6, 32, 19, 22, 99, 1, 1, 1, 1, 1, 1 };
+
 
             ArrayList arrayList = key switch
             {
                 1 => new ArrayList(arrayA),
                 2 => new ArrayList(arrayB),
+                3 => new ArrayList(arrayC),
                 _ => new ArrayList(),
             };
             return arrayList;
@@ -462,8 +466,10 @@ namespace ArrayListTests
             Assert.AreEqual(expected.ToArray(), actual.ToArray());
         }
 
-        [TestCase(1, 1)]
-        [TestCase(2, 2)]
+        //[TestCase(1, 1)]
+        //[TestCase(2, 2)]
+        [TestCase(3, 3)]
+
 
         public void RemoveFirstTest(int key, int expectedKey)
         {

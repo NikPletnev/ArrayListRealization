@@ -139,12 +139,13 @@ namespace Lists
         {
             ShiftLeft(1, 1);
             _listLength--;
-
+            SqueezeArray();
         }
 
         public void RemoveLast()
         {
             _listLength--;
+            SqueezeArray();
 
         }
 
@@ -156,10 +157,8 @@ namespace Lists
             }
             ShiftLeft(1, idx+1);
             _listLength--;
-            //for (int i = idx; i < _arrayList.Length - 1; i++)
-            //{
-            //    _arrayList[i] = _arrayList[i + 1];
-            //}
+            SqueezeArray();
+           
         }
 
 
@@ -186,6 +185,7 @@ namespace Lists
             {
                 _arrayList[i] = _arrayList[i + n];
             }
+            SqueezeArray();
         }
 
         public void RemoveFirst(int val)
@@ -199,6 +199,7 @@ namespace Lists
                     break;
                 }
             }
+            SqueezeArray();
         }
 
         public void RemoveAll(int val)
@@ -208,22 +209,25 @@ namespace Lists
 
                 if (_arrayList[i] == val)
                 {
-                    RemoveAt(i);
+                    ShiftLeft(1, i + 1);
+                    _listLength--;
                     i--;
                 }
             }
+            SqueezeArray();
         }
 
         public bool Contains(int val)
         {
-            for (int i = 0; i < _listLength; i++)
+            
+           if(IndexOf(val) != -1)
             {
-                if (_arrayList[i] == val)
-                {
-                    return true;
-                }
+                return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
 
@@ -264,14 +268,13 @@ namespace Lists
 
         public void Reverse()
         {
-            int[] reversedArray = new int[_listLength];
-            for (int i = 0; i < _listLength; i++)
+            
+            int halfLength = _listLength / 2;
+            for (int i = 0; i < halfLength; i++)
             {
-                reversedArray[i] = _arrayList[_listLength - i - 1]; ;
+                Swap(ref _arrayList[i], ref _arrayList[_listLength-i-1]);
             }
-
-            _arrayList = reversedArray;
-        }
+        } 
 
         public int Max()
         {
@@ -406,13 +409,16 @@ namespace Lists
 
         private void SqueezeArray()
         {
-            int[] newArrayList = new int[_listLength];
-
-            for (int i = 0; i < _listLength; i++)
+            if (_listLength > 10)
             {
-                newArrayList[i] = _arrayList[i];
+                int[] newArrayList = new int[_listLength];
+
+                for (int i = 0; i < _listLength; i++)
+                {
+                    newArrayList[i] = _arrayList[i];
+                }
+                _arrayList = newArrayList;
             }
-            _arrayList = newArrayList;
         }
 
 
