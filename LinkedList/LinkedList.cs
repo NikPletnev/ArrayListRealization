@@ -114,11 +114,12 @@ namespace Lists
 
         public void AddAt(int idx, int val)
         {
-            if (idx+1 > GetLength() || idx < 0)
+            int length = GetLength();
+            if (idx+1 > length || idx < 0)
             {
                 throw new IndexOutOfRangeException();
             }
-            else if (GetLength() == 1)
+            else if (length == 1)
             {
                 AddFirst(val);
             }
@@ -142,11 +143,12 @@ namespace Lists
 
         public void AddAt(int idx, LinkedList list)
         {
-            if (idx + 1 > GetLength() || idx < 0)
+            int length = GetLength();
+            if (idx + 1 > length || idx < 0)
             {
                 throw new IndexOutOfRangeException();
             }
-            else if (GetLength() == 1)
+            else if (length == 1)
             {
                 AddFirst(list);
             }
@@ -176,8 +178,8 @@ namespace Lists
 
         public void Set(int idx, int val)
         {
-
-            if (idx + 1 > GetLength() || idx < 0)
+            int length = GetLength();
+            if (idx + 1 > length || idx < 0)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -196,7 +198,7 @@ namespace Lists
 
         public void RemoveFirst()
         {
-            if (GetLength() == 0)
+            if (_head == null)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -204,40 +206,39 @@ namespace Lists
         }
 
         public void RemoveLast()
-        {
-            if (GetLength() == 0)
+        {     
+            Node current = _head;
+            if (current == null)
             {
                 throw new IndexOutOfRangeException();
             }
-            if (GetLength() == 1)
+            if (current.Next == null)
             {
                 _head = null;
             }
             else
             {
-                Node current = _head;
                 while (current.Next.Next != null)
                 {
                     current = current.Next;
                 }
                 current.Next = null;
             }
-           
         }
 
         public void RemoveAt(int idx)
         {
+            Node current = _head;
             if (idx + 1 > GetLength() || idx < 0)
             {
                 throw new IndexOutOfRangeException();
             }
-            else if (GetLength() == 1)
+            else if (current.Next == null)
             {
                 RemoveFirst();
             }
             else
-            {
-                Node current = _head;
+            {     
                 int count = 0;
                 while (count != idx - 1)
                 {
